@@ -19,7 +19,7 @@
 <body>
    {% block header %}
 
-   <!-- HEADER VISITEUR  -->
+   
    {% if status is null %}
    
    <header>
@@ -40,7 +40,7 @@
   </div>
 </nav>
    </header>
-   <!-- HEADER USER  -->
+   
    {% elseif status == 2 %}
    <header>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -68,7 +68,7 @@
    {% endblock %}
 
    {% block footer %}
-   {# Footer ici #}
+   
    {% endblock %}
 
    {% block javascripts %}

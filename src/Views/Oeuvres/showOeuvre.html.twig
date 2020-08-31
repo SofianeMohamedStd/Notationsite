@@ -104,7 +104,7 @@
             <div class="form-group">
                
                {% if status == 2 %}
-               {#*****Si une note a été placés en temporaire avant login*****#}
+               
                {% if tmpNote %}
                <div id="containerstar" class="star-complet{{tmpNote}}">
                   {% else %}
@@ -114,7 +114,7 @@
                      {% else %}
                      <div id="containerstar" class="star">
                         {% endif %}
-                        <!--System de notation par étoile-->
+                       
                          <label for="note-1" class="labelButon">☆</label>
                         <input class="radio" type="radio" name="note" id="note-1" value="1">
                         <label for="note-2" class="labelButon">☆</label>
