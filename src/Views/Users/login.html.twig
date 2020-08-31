@@ -1,0 +1,118 @@
+{% extends "template.html.twig" %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+
+	{% for login in utilisateur %}
+		<p>{{pseudo.pseudo}}</p>
+	{% endfor %}
+
+	<div
+		class="container">
+
+		{# FORMULAIRE DE CONNEXION #}
+		{% if slug is null %}
+
+			<div class="row justify-content-md-center">
+				<form name="login" class="col-4 users-form" method="POST" action="{{baseUrl}}/Connexion/post">
+					<h2 class="title-forms-users">Se connecter :</h2>
+					{# PSEUDO #}
+					<div class="form-group-users">
+						<label for="pseudo">
+							<h4>Pseudo</h4>
+						</label>
+						<input type="text" maxlength="16" value="{{ inputPseudo }}" name="pseudo" class="form-control d-inline" id="pseudo" {% if error[0] %} style="border-color: #FF2E63;" {% endif %}>
+						<p class="text-danger d-inline grp-err-1">{{ error[0] }}</p>
+					</div>
+					{# MOT DE PASSE #}
+					<div class="form-group-users">
+						<label for="mdp">
+							<h4 id="titre-mdp">Mot de passe</h4>
+						</label>
+						<input type="password" maxlength="16" class="form-control" name="mdp" {% if error[1] %} style="border-color: #FF2E63;" {% endif %}>
+						<p class="text-danger d-inline err-2-connexion">{{ error[1] }}</p>
+					</div>
+					<div
+						class="form-group-users boutons-users">
+						{# SUBMIT #}
+						<button type="submit" class="btn btn-outline jati-colors-btn col">Se connecter</button>
+						{# PAS ENCORE INSCRIT #}
+						<a href="{{ baseUrl }}/Inscription" class="btn btn-outline btn-light col mt-3">Pas encore inscrit </a>
+					</div>
+				</form>
+			</div>
+			{# FORMULAIRE D'INSCRIPTION #}
+		{% elseif (slug == 'Inscription' or slug == 'Inscription/post') %}
+
+			<div class="row justify-content-md-center">
+				<form
+					name="register" class="col-4 users-form" method="POST" action="{{ baseUrl }}/Inscription/post" }>
+
+					<h2 class="title-forms-users">Créer un compte</h2>
+
+
+					{# MAIL #}
+					<div class="form-group-users">
+						<label for="regMail">
+							<h4>Adresse mail</h4>
+						</label>
+						<input type="email" class="form-control" name="mail" value="{{ inputMail }}" {% if error[0] %} style="border-color: #FF2E63;" {% endif %}>
+						<p id="requiredField" class="text-danger d-inline grp-err-1">{{ error[0] }}</p>
+					</div>
+					{# PSEUDO #}
+					<div class="form-group-users">
+						<label for="regPseudo">
+							<h4>Pseudo</h4>
+						</label>
+						<input type="text" maxlength="15" class="form-control" name="pseudo" value="{{ inputPseudo }}" {% if error[1] %} style="border-color: #FF2E63;" {% endif %}>
+						<p id="requiredField" class="text-danger d-inline grp-err-2">
+							{{ error[1] }}</p>
+					</div>
+					{# MOT DE PASSE #}
+					<div class="form-group-users">
+						<label for="regPassword">
+							<h4>Mot de passe</h4>
+						</label>
+						<input type="password" class="form-control" name="mdp" {% if error[2] %} style="border-color: #FF2E63;" {% endif %}>
+						<p id="requiredField" class="text-danger d-inline grp-err-3">
+							{{ error[2] }}</p>
+					</div>
+					{# SUBMIT #}
+					<div class="form-group-users">
+						<button type="submit" class="btn btn-outline jati-colors-btn col">S'inscrire</button>
+						<p id="requiredField" class="text-danger d-inline grp-err-4">
+							{{ generalError }}</p>
+					</div>
+					<a  class="form-text text-muted" href="{{ baseUrl }}/Connection">Retoure vers Connexion</a>
+					
+				</form>
+			</div>
+
+
+			{# BIENVENUE #}
+		{% elseif (slug == 'Bienvenue') %}
+
+			<div class="row justify-content-md-center">
+				<div
+					class="col-4 users-form">
+
+					{# Message de bienvenue #}
+					<div class="form-group-users">
+						<h2>
+							{{ user }}
+							,Welcome To NotationSite</h2>
+						
+					</div>
+
+					{# direction page accueuil #}
+					<div class="form-group-users">
+						<a href="{{ baseUrl }}" class="btn btn-outline jati-colors-btn col">page d'accueil</a>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends "template.html.twig" %}
+
+{% block title %}{{oeuvre.title}}{% endblock %}
+
+{% block body %}
+<div class="container">
+   <div class="flex-column align-items-start bd-highlight">
+      <div class="d-flex justify-content-center pt-5">
+         <h2>{{oeuvre.title}}</h2>
+      </div>
+
+
+      <div class="d-flex pt-5">
+         <div class="d-flex flex-column">
+            <img class="rounded mb-5" src="{{oeuvre.picture}}" style="width:300px;height:400px;">
+            <p><span class="font-weight-bold">Année : </span>{{oeuvre.year}}</p>
+            <p><span class="font-weight-bold">Categorie : </span>{{oeuvre.style}}</p>
+            <p><span class="font-weight-bold">Durée : </span>{{oeuvre.time | date('H:i:s')}}</p>
+
+   
+            
+         </div>
+
+         <div class="d-flex flex-column ml-5">
+            <div class=" text-break mb-5">
+               <p class="font-weight-bold">Resumé :</p>
+               {{oeuvre.resume}}
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<hr>
+
+
+{% block comment %}
+
+<div class="container">
+
+
+  {% if anchor %} 
+
+   <div id="alerteDisplay">
+      {{ alert | striptags ('<div>') | raw }}
+   </div>
+   {% endif %}
+
+   {% block javascripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            if(document.getElementById("alertDisplay")){
+                location.href = "#alertDisplay"
+            }
+        });
+    </script>
+{% endblock %}
+
+
+
+
+   
+   <div class="card text-center m-3">
+
+   
+      
+      <div class="card-header">
+         <form method="POST" id="comment" action="{{baseUrl}}/Commentaires/Ajouter_{{oeuvre.id_oeuvre}}">
+
+            
+            {% if status == 2 %}
+            
+            {% if tmpTitle  %}
+            <input class="form-control" type="text" name="title" value="{{ tmpTitle }}">
+            {% else %}
+            <input class="form-control" type="text" name="title" placeholder="Titre">
+            {% endif %}
+
+      </div>
+
+      <div class="card">
+         <div class="card-block">
+
+            
+            {% if tmpComment %}
+            <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3"
+               placeholder="{{ tmpComment }}" value="{{ tmpComment }}"></textarea>
+            {% else %}
+
+            <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3"
+               placeholder="Votre commentaire"></textarea>
+            {% endif %}
+            
+            {% else %}
+            <input class="form-control" type="text" name="title" placeholder="Titre">
+            <textarea class="form-control" name="controlText" id="ControlText{{ loop.index }}" rows="3"
+               placeholder="{{ user }}"></textarea>
+            {% endif %}
+
+
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+            <div class="form-group">
+               
+               {% if status == 2 %}
+               {#*****Si une note a été placés en temporaire avant login*****#}
+               {% if tmpNote %}
+               <div id="containerstar" class="star-complet{{tmpNote}}">
+                  {% else %}
+                  <div id="containerstar" class="star">
+                     {% endif %}
+
+                     {% else %}
+                     <div id="containerstar" class="star">
+                        {% endif %}
+                        <!--System de notation par étoile-->
+                         <label for="note-1" class="labelButon">☆</label>
+                        <input class="radio" type="radio" name="note" id="note-1" value="1">
+                        <label for="note-2" class="labelButon">☆</label>
+                        <input class="radio" type="radio" name="note" id="note-2" value="2">
+                        <label for="note-3" class="labelButon">☆</label>
+                        <input class="radio" type="radio" name="note" id="note-3" value="3">
+                        <label for="note-4" class="labelButon">☆</label>
+                        <input class="radio" type="radio" name="note" id="note-4" value="4">
+                        <label for="note-5" class="labelButon">☆</label>
+                        <input class="radio" type="radio" name="note" id="note-5" value="5">
+                        
+                       
+                        
+                     </div>
+                  </div>
+               </div>
+               
+               {% if status == 2 %}
+               <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <div class="d-flex justify-content-center">
+                     <span>{{ user.pseudo }}</span>
+                  </div>
+               </div>
+               {% else %}
+               
+               <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <div class="d-flex justify-content-center">
+                     <span>{{ 'Visiteur' }}</span>
+                  </div>
+               </div>
+               {% endif %}
+
+               <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                  <div class="d-flex justify-content-end">
+                     <span>{{ datedujour }}</span>
+                  </div>
+               </div>
+             </div>
+             <div class="card-footer text-center"><button type="submit" id="btnpost"
+                  class="btn btn-secondary btn-sm mb-2">Poster</button></div>
+            </form>
+         </div>
+
+
+      </div>
+   </div>
+</div>
+
+
+
+{% if comments %}
+<div class="container">
+
+   {% for comment in comments %}
+   <div class="card text-center m-3">
+      <div class="card-header">
+         <h5>{{ comment.title }}</h5>
+      </div>
+      <div class="card">
+         <div class="card-block">
+            <div class="row">
+               <div class="col d-flex justify-content-start ">
+                  
+                  <div id="controlComment{{ loop.index }}" data-idcomment="{{ comment.id_comment }}"
+                     data-base="{{baseUrl}}" data-idoeuvre="{{oeuvre.id_oeuvre}}">
+                     <p class="pr-sm-1 m-2" id="pComment{{ loop.index }}">{{ comment.content }}</p>
+                  </div>
+               </div>
+               <div class="container h-100">
+                  <div class="row align-items-center h-100">
+                     <div class="col-12 p-5">
+                        <div class="card h-100 justify-content-center" style="border:none">
+                           <div class="col-12">
+
+                              <div class="accordion" id="accordionExample">
+                                 <div class="card" style="border:none">
+                                    <div class="row">
+                                     
+                                     <div id="collapse{{ loop.index }}" class="collapse hide"
+                                       aria-labelledby="heading{{ loop.index }}" data-parent="#accordionExample">
+                                       <div class="card-body">
+                                          {{mess.message}}
+                                       </div>
+                                      
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="card-footer text-center">
+         <span class="btn btn-theme float-left">note: {{ comment.note }}
+         </span>
+         </span>
+         <span class="btn btn-theme">Commentaire: N°{{ comment.id_comment }}
+         </span>
+         <span class="btn btn-theme float-right">{{ comment.date | date("d/m/Y/ H:i:s", "Europe/Paris") }}
+         </span>
+      </div>
+   </div>
+
+   {% endfor %}
+   {% endif %}
+
+   {% endblock %}
+   {% endblock %}
