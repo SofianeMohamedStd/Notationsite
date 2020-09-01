@@ -12,9 +12,7 @@ class HomeController extends Controller {
        $this->twig = parent::getTwig();
       
     }
-    /**
-     *
-     */
+    
     public function startSession()
     {
        
@@ -25,17 +23,13 @@ class HomeController extends Controller {
        }
     }
  
-    /**
-     *
-     */
+  
     public function __set($name, $value)
     {
        $_SESSION[$name] = $value;
     }
  
-    /**
-     *
-     */
+   
     public function __get($name)
     {
        if (isset($_SESSION[$name])) {
@@ -43,9 +37,7 @@ class HomeController extends Controller {
        }
     }
  
-    /**
-     *
-     */
+   
     public function __getPOST($name)
     {
        if (isset($_POST[$name])) {
@@ -53,25 +45,19 @@ class HomeController extends Controller {
        }
     }
  
-    /**
-     *
-     */
+    
     public function __empty($name)
     {
        return empty($_SESSION[$name]);
     }
  
-    /**
-     *
-     */
+    
     public function __isset($name)
     {
        return isset($_SESSION[$name]);
     }
  
-    /**
-     *
-     */
+   
     public function __unsetTab()
     {
        $erase = false;
@@ -89,17 +75,13 @@ class HomeController extends Controller {
        }
     }
  
-    /**
-     *
-     */
+    
     public function __unset($name)
     {
        unset($_SESSION[$name]);
     }
  
-    /**
-     *
-     */
+    
     public function destroy()
     {
        session_start();
@@ -111,9 +93,7 @@ class HomeController extends Controller {
      
     }
  
-    /**
-     *
-     */
+    
     public function __alert($alert)
     {
        if (isset($_SESSION[$alert])) {
@@ -121,9 +101,7 @@ class HomeController extends Controller {
        }
     }
  
-    /**
-     *
-     */
+    
     public function index()
     {
        $this->startSession();

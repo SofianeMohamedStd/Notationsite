@@ -10,9 +10,6 @@ class Comments extends Model
       $this->pdo = parent::getPdo();
    }
 
-   /**
-   *  recherche tous les commentaires de la BDD
-   */
    public function getAllComments()
    {
       $req = $this->pdo->prepare('SELECT * FROM comments ORDER BY `date` DESC');

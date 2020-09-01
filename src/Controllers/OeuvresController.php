@@ -11,14 +11,11 @@ class OeuvresController extends Controller {
    
     public function __construct()
     {
-       //$this->twig = parent::getTwig();
+       
        parent::__construct();
        $this->model = new Oeuvres();
     }
  
-    /**
-     *  Affiche tout les Oeuvres
-     */
     public function showAllOeuvres()
     {
        $pageTwig = 'Oeuvres/showAllOeuvres.html.twig';

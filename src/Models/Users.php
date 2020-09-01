@@ -65,6 +65,12 @@ class Users extends Model
       $req->execute([$id_user]);
       return $req->fetch();
    }
+
+   public function setUpdateLogTime($pseudo){
+      $req = $this->pdo->prepare("UPDATE users SET time_log = NOW() WHERE pseudo= ?" );
+      $req->execute([$pseudo]);
+
+   }
    
 
 }

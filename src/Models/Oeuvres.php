@@ -28,9 +28,7 @@ class Oeuvres extends Model
       $req->execute([$id_oeuvre]);
       return $req->fetch();
    }
-   /**
-   *  Recherche un Oeuvre par genre
-   */
+  
    public function getByStyle($style)
    {
       $req = $this->pdo->prepare(

@@ -9,9 +9,7 @@ class NotFoundController extends Controller {
         $this->twig = parent::getTwig();
      }
   
-     /**
-     *
-     */
+   
      public function index() {
         header("HTTP/1.0 404 Not Found");
         $pageTwig = 'Errors/404.html.twig';

@@ -47,6 +47,7 @@ class UsersController extends Controller
                   
                   if (password_verify($_POST['mdp'], $hashMdp)) {
 
+                     $this->model->setUpdateLogTime($inputPseudo);
                      
                      $instanceHome = new HomeController();
                      $instanceHome->__set('utilisateur', $_POST['pseudo']);
@@ -86,6 +87,7 @@ class UsersController extends Controller
             }
          }
       }
+        
 
       $title = "Connexion";
 

@@ -29,9 +29,7 @@ class Objets extends Model
       $req->execute([$id_objet]);
       return $req->fetch();
    }
-   /**
-   *  Recherche un Oeuvre par genre
-   */
+   
    public function getByStyle($style)
    {
       $req = $this->pdo->prepare(

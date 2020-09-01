@@ -168,14 +168,7 @@ class CommentsController extends Controller {
       
  
        if (empty($_SESSION['tmpTitle']) || empty($_SESSION['tmpComment'])) {
-          // On affiche une alerte
- 
- 
-          //$instanceHome->__set('alert', "<script>alert(\"Votre commentaire n'a pas été publié car il est incomplet.Veuillez-vérifié.\")</script>");
-          //$instanceHome->__alert('alert');
- 
- 
-          
+         
           $location = $instanceHome->__get('location');
           header("Location: $location");
        } else {
@@ -243,8 +236,7 @@ class CommentsController extends Controller {
 
              $location = $instanceHome->__get('location');
           }
-          //$instanceOeuvres = new ObjetsController();
-          //$instanceOeuvres->showObjet($_SESSION['id_objet'], $displayAlert);
+          
        }
     }
  }
