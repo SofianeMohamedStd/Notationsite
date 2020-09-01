@@ -1,22 +1,23 @@
 {% extends "template.html.twig" %}
 
-{% block title %}{{oeuvre.title}}{% endblock %}
+{% block title %}{{objet.name}}{% endblock %}
 
 {% block body %}
 
-<div class="container">
+ <div class="container">
    <div class="flex-column align-items-start bd-highlight">
       <div class="d-flex justify-content-center pt-5">
-         <h2>{{oeuvre.title}}</h2>
+         <h2>{{objet.name}}</h2>
       </div>
 
 
       <div class="d-flex pt-5">
          <div class="d-flex flex-column">
-            <img class="rounded mb-5" src="{{oeuvre.picture}}" style="width:300px;height:400px;">
-            <p><span class="font-weight-bold">Année : </span>{{oeuvre.year}}</p>
-            <p><span class="font-weight-bold">Categorie : </span>{{oeuvre.style}}</p>
-            <p><span class="font-weight-bold">Durée : </span>{{oeuvre.time | date('H:i:s')}}</p>
+            <img class="rounded mb-5" src="{{objet.picture}}" style="width:300px;height:400px;">
+            <p><span class="font-weight-bold">Categorie : </span>{{objet.style}}</p>
+            <p><span class="font-weight-bold">marque : </span>{{objet.marque}}</p>
+            <p><span class="font-weight-bold">Année : </span>{{objet.year}}</p>
+            <p><span class="font-weight-bold">prix : </span>{{objet.prix}} €</p>
 
    
             
@@ -24,8 +25,8 @@
 
          <div class="d-flex flex-column ml-5">
             <div class=" text-break mb-5">
-               <p class="font-weight-bold">Resumé :</p>
-               {{oeuvre.resume}}
+               <p class="font-weight-bold">Caracteristique :</p>
+               {{objet.caracteristique}}
             </div>
          </div>
       </div>
@@ -65,7 +66,7 @@
    
       
       <div class="card-header">
-         <form method="POST" id="comment" action="{{baseUrl}}/Commentaires/Ajouter_{{oeuvre.id_oeuvre}}">
+         <form method="POST" id="comment" action="{{baseUrl}}/CommentairesObjet/Ajouter_{{objet.id_objet}}">
 
             
             {% if status == 2 %}
@@ -180,7 +181,7 @@
                <div class="col d-flex justify-content-start ">
                   
                   <div id="controlComment{{ loop.index }}" data-idcomment="{{ comment.id_comment }}"
-                     data-base="{{baseUrl}}" data-idoeuvre="{{oeuvre.id_oeuvre}}">
+                     data-base="{{baseUrl}}" data-idobjet="{{objet.id_objet}}">
                      <p class="pr-sm-1 m-2" id="pComment{{ loop.index }}">{{ comment.content }}</p>
                   </div>
                </div>
@@ -224,8 +225,8 @@
 
    {% endfor %}
    {% endif %}
-
+    
    {% endblock %}
-
+   
    {% endblock %}
-  
+   

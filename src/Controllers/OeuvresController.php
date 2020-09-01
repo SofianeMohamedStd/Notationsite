@@ -66,7 +66,7 @@ class OeuvresController extends Controller {
  
     
        $instanceComments = new Comments();
-       $comments = $instanceComments->linkCommentByOeuvre($id_oeuvre);
+       $comments = $instanceComments->CommentByOeuvre($id_oeuvre);
  
  
        $instanceUser = new Users();

@@ -26,7 +26,6 @@ class Comments extends Model
       $req = $this->pdo->prepare('INSERT INTO comments (id_user, title, content, note)
       VALUE (?, ?, ?, ?)');
       $req->execute([$id_user, $title, $content, $note]);
-      //Récupère l'id de l'insertion dans la table
       return $this->pdo->lastInsertId();
    }
 
@@ -43,8 +42,16 @@ class Comments extends Model
       VALUE (?, ?)');
       return $req->execute([$id_oeuvre, $id_comment]);
    }
+
+   public function addObjetComments($id_objet, $id_comment)
+   {
+      $req = $this->pdo->prepare('INSERT INTO objet_comments (id_objet, id_comment)
+      VALUE (?, ?)');
+      return $req->execute([$id_objet, $id_comment]);
+   }
    
-   public function linkCommentByOeuvre($id)
+   
+   public function CommentByOeuvre($id)
    {
 
       $req = $this->pdo->prepare(
@@ -53,6 +60,20 @@ class Comments extends Model
          WHERE oeuvres.id_oeuvre = ?
          AND oeuvres.id_oeuvre = oeuvre_comments.id_oeuvre
          AND comments.id_comment = oeuvre_comments.id_comment
+         ORDER BY `date` DESC');
+      $req->execute([$id]);
+
+      return $req->fetchAll();
+   }
+   public function CommentByObjet($id)
+   {
+
+      $req = $this->pdo->prepare(
+         'SELECT comments.*
+         FROM objets, objet_comments, comments
+         WHERE objets.id_objet = ?
+         AND objets.id_objet = objet_comments.id_objet
+         AND comments.id_comment = objet_comments.id_comment
          ORDER BY `date` DESC');
       $req->execute([$id]);
 

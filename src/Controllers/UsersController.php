@@ -53,7 +53,14 @@ class UsersController extends Controller
                      $_SESSION['status'] = 2;
                      if (isset($_SESSION['location'])) {
                         $instanceComments = new CommentsController();
-                        $instanceComments->postAfterLogin();
+                          
+                              $instanceComments->postAfterLogin();
+                           
+                              $instanceComments->postAfterLoginObjet();
+                           
+                        
+
+                        
                         
                      } else {
                        
