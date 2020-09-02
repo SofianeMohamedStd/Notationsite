@@ -10,6 +10,7 @@ class FirstCest
     public function tryToTest(AcceptanceTester $I)
     {
         $I->amOnPage('/');
-        $I->see('Notation');
+        $I->seeResponseCodeIs('200');
+        //$I->seeResponseCodeIs('404');
     }
 }

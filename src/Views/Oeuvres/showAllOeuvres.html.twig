@@ -34,8 +34,8 @@
                <a href="{{baseUrl}}/Oeuvres/Oeuvre_{{oeuvres.id_oeuvre}}" class="shadow-drop-2-center">
                <img src="{{oeuvres.picture}}" style="width:300px;height:400px;"></img>
                </a>
-               <p class="text-in-image m-0 pb-3 px-0 pt-3 text-center font-weight-bold" >{{oeuvres.title}}</p>
-               <p class="text-in-image m-0 pb-3 px-0 pt-3 text-center font-weight-bold" >Categorie : {{oeuvres.style}}</p>
+               <p class="text-center font-weight-bold" >{{oeuvres.title}}</p>
+               <p class="text-center font-weight-bold" >Categorie : {{oeuvres.style}}</p>
             </div>
          {% endfor %}
       </div>
@@ -47,7 +47,7 @@
                <a href="{{baseUrl}}/Oeuvres/Oeuvre_{{style.id_oeuvre}}" class="shadow-drop-2-center">
                <img src="{{style.picture}}" style="width:300px;height:400px;"></img>
                </a>
-               <p class="text-in-image m-0 pb-3 px-0 pt-3 text-center font-weight-bold" >{{style.title}}</p>
+               <p class="text-center font-weight-bold" >{{style.title}}</p>
             </div>
          {% endfor %}
       </div>

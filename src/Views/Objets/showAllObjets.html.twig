@@ -33,8 +33,8 @@
                <a href="{{baseUrl}}/Objets/Objet_{{objets.id_objet}}" class="shadow-drop-2-center">
                <img src="{{objets.picture}}" style="width:300px;height:400px;"></img>
                </a>
-               <p class="text-in-image m-0 pb-3 px-0 pt-3 text-center font-weight-bold" >{{objets.marque}}</p>
-               <p class="text-in-image m-0 pb-3 px-0 pt-3 text-center font-weight-bold" >Categorie : {{objets.style}}</p>
+               <p class="text-center font-weight-bold" >{{objets.marque}}</p>
+               <p class="text-center font-weight-bold" >Categorie : {{objets.style}}</p>
             </div>
          {% endfor %}
       </div>
@@ -46,7 +46,7 @@
                <a href="{{baseUrl}}/Objets/Objet_{{style.id_objet}}" class="shadow-drop-2-center">
                <img src="{{style.picture}}" style="width:300px;height:400px;"></img>
                </a>
-               <p class="text-in-image m-0 pb-3 px-0 pt-3 text-center font-weight-bold" >{{style.marque}} : {{style.name}}</p>
+               <p class="text-center font-weight-bold" >{{style.marque}} : {{style.name}}</p>
               
             </div>
          {% endfor %}
