@@ -1,5 +1,5 @@
 <?php
-
+namespace Unity\tests;
 use PHPUnit\Framework\TestCase;
 use App\Controllers\CommentsController;
 

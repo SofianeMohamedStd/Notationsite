@@ -168,7 +168,7 @@ class CommentsController extends Controller {
       
  
        if (empty($_SESSION['tmpTitle']) || empty($_SESSION['tmpComment'])) {
-         
+
           $location = $instanceHome->__get('location');
           header("Location: $location");
        } else {

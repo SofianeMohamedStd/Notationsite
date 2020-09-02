@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace Unity\tests;
 use App\Models\Users;
 use PHPUnit\Framework\TestCase;
 
