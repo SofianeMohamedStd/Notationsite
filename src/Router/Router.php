@@ -42,7 +42,7 @@ class Router
     public function run() 
     {
         if(!isset($this->routes[$_SERVER['REQUEST_METHOD']])){
-            throw new \Exception("REQUEST_METHOD does not exist"); //405 ?? Je pense qu'on pourrait renvoyer une p'tite erreur 405 ici
+            throw new \Exception("REQUEST_METHOD does not exist"); 
         }
         foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $route)
         {
@@ -51,7 +51,7 @@ class Router
                 return $route->call();
             }
         }
-        //throw new \Exception("No routes matches"); //404
+        
         $notFound = new NotFoundController();
         $notFound->index();
     }
