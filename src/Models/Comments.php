@@ -47,6 +47,13 @@ class Comments extends Model
       VALUE (?, ?)');
         return $req->execute([$id_objet, $id_comment]);
     }
+
+    public function addPrestationComments($id_prestation, $id_comment)
+    {
+        $req = $this->pdo->prepare('INSERT INTO prestation_comments (id_prestation, id_comment)
+      VALUE (?, ?)');
+        return $req->execute([$id_prestation, $id_comment]);
+    }
    
    
     public function commentByOeuvre($id)
@@ -73,6 +80,21 @@ class Comments extends Model
          WHERE objets.id_objet = ?
          AND objets.id_objet = objet_comments.id_objet
          AND comments.id_comment = objet_comments.id_comment
+         ORDER BY `date` DESC'
+        );
+        $req->execute([$id]);
+
+        return $req->fetchAll();
+    }
+    public function commentByPrestation($id)
+    {
+
+        $req = $this->pdo->prepare(
+            'SELECT comments.*
+         FROM prestations, prestation_comments, comments
+         WHERE prestations.id_prestation = ?
+         AND prestation.id_prestation = prestation_comments.id_prestation
+         AND comments.id_comment = prestation_comments.id_comment
          ORDER BY `date` DESC'
         );
         $req->execute([$id]);

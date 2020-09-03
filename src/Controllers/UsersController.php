@@ -51,6 +51,8 @@ class UsersController extends Controller
                                  $instanceComments->postAfterLogin();
                            
                                  $instanceComments->postAfterLoginObjet();
+
+                                 $instanceComments->postAfterLoginPrestation();
                             } else {
                                 if (!$instanceHome->__empty('utilisateur')) {
                                     $pageTwig = 'index.html.twig';

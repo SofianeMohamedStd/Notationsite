@@ -21,6 +21,11 @@ $router->post('/Objets/Genre', 'Objets.genre');
 $router->get('/Objet_:id_objet', 'Objets.showObjet');
 $router->get('/Objet', 'Objets.showAllObjets');
 
+$router->get('/Prestations/Prestation_:id_prestation', 'Prestations.showPrestation');
+$router->post('/Prestations/Genre', 'Prestations.genre');
+$router->get('/Prestation_:id_prestation', 'Prestations.showPrestation');
+$router->get('/Prestation', 'Prestations.showAllPrestations');
+
 
 $router->get('/Connection', 'Users.connexion');
 $router->post('/Connexion/post', 'Users.connexion');
@@ -31,10 +36,9 @@ $router->post('/Inscription/post', 'Users.register');
 $router->post('/Bienvenue', 'Users.bienvenue');
 
 $router->post('/Commentaires/Ajouter_:id_oeuvre', 'Comments.addComment');
-$router->get('/Commentaires', 'Comments.index');
-
 $router->post('/CommentairesObjet/Ajouter_:id_objet', 'Comments.addCommentObjet');
-
+$router->post('/CommentairesPrestation/Ajouter_:id_prestation', 'Comments.addCommentPrestation');
+$router->get('/Commentaires', 'Comments.index');
 
 $router->get('/Deconnection', 'Users.logout');
 

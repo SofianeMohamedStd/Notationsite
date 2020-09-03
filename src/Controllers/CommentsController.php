@@ -7,6 +7,7 @@ use App\Controllers\Controller;
 use App\Controllers\HomeController;
 use App\Controllers\ObjetsController;
 use App\Controllers\OeuvresController;
+use App\Controllers\PrestationsController;
 
 class CommentsController extends Controller
 {
@@ -65,8 +66,29 @@ class CommentsController extends Controller
         $_SESSION['tabSession'][] = 'location';
  
  
-        $instanceOeuvres = new ObjetsController();
-        $instanceOeuvres->showObjet($id_objet, $displayAlert);
+        $instanceObjets = new ObjetsController();
+        $instanceObjets->showObjet($id_objet, $displayAlert);
+    }
+
+    public function commentairetemporairePrestation($id_prestation, $displayAlert)
+    {
+ 
+        $_SESSION['tabSession'] = [];
+ 
+        $instanceHome = new HomeController();
+       
+        $instanceHome->__set('tmpTitle', $instanceHome->__getPOST('title'));
+        $_SESSION['tabSession'][] = 'tmpTitle';
+        $instanceHome->__set('tmpComment', $instanceHome->__getPOST('controlText'));
+        $_SESSION['tabSession'][] = 'tmpComment';
+        $instanceHome->__set('tmpNote', $instanceHome->__getPOST('note'));
+        $_SESSION['tabSession'][] = 'tmpNote';
+        $instanceHome->__set('location', "$this->baseUrl/Prestations/Prestation_$id_prestation");
+        $_SESSION['tabSession'][] = 'location';
+ 
+ 
+        $instancePrestations = new PrestationsController();
+        $instancePrestations->showPrestation($id_prestation, $displayAlert);
     }
  
     public function addComment($id_oeuvre)
@@ -147,6 +169,45 @@ class CommentsController extends Controller
         }
     }
 
+
+    public function addCommentPrestation($id_prestation)
+    {
+ 
+        $instanceHome = new HomeController();
+        $instanceHome->__set('id_prestation', $id_prestation);
+ 
+        if ($instanceHome->__get('status') === 2) {
+            $instanceUsers = new Users();
+            $user = $instanceUsers->getOneUser($instanceHome->__get('utilisateur'));
+            $id_user = $user['id_user'];
+ 
+          
+            if (isset($_POST) && !empty($instanceHome->__getPOST('title')) && !empty($instanceHome->__getPOST('controlText'))) {
+                $title = $instanceHome->__getPOST('title');
+                $content = $instanceHome->__getPOST('controlText');
+                $note = $instanceHome->__getPOST('note');
+ 
+             
+                $idComment = $this->model->addComment($id_user, $title, $content, $note);
+             
+                $this->model->addUsersComments($id_user, $idComment);
+             
+                $this->model->addPrestationComments($id_prestation, $idComment);
+ 
+                header("Location: $this->baseUrl/Prestations/Prestation_$id_prestation");
+            } else {
+                $displayAlert = '<div class=" text-center" id="alerte" data-location="$this->baseUrl/Prestations/Prestation_' . $_SESSION['id_prestation'] .'" ><strong>Erreur...</strong> Votre commentaire n\'a pas été publié car il est incomplet!</div>';
+ 
+                $this->commentairetemporairePrestation($id_prestation, $displayAlert);
+            }
+        } else {
+            $displayAlert = '<div class="text-center" id="alerte" data-location="$this->baseUrl/Prestations/Prestation_' . $_SESSION['id_prestation'] .'" ><strong>Erreur...</strong> Vous devez vous identifier vous publier!</div>';
+ 
+          
+            $this->commentairetemporairePrestation($id_prestation, $displayAlert);
+        }
+    }
+
  
     
      
@@ -214,6 +275,43 @@ class CommentsController extends Controller
             }
             if ($result === false) {
                 $displayAlert = '<div class=" text-center" id="alerte" data-location="$this->baseUrl/Objets/Objet_' . $_SESSION['id_objet'] .'" ><strong>Erreur...</strong>Un erreur est survenu lors de la connexion a la base de données.Veuillez recommencer</div>';
+
+                $location = $instanceHome->__get('location');
+            }
+        }
+    }
+
+    public function postAfterLoginPrestation()
+    {
+ 
+        $instanceHome = new HomeController();
+      
+ 
+        if (empty($_SESSION['tmpTitle']) || empty($_SESSION['tmpComment'])) {
+            $location = $instanceHome->__get('location');
+            header("Location: $location");
+        } else {
+            $instanceUsers = new Users();
+         
+            $user = $instanceUsers->getOneUser($instanceHome->__get('utilisateur'));
+          
+            $id_user = $user['id_user'];
+ 
+          
+            $idComment = $this->model->addComment($id_user, $instanceHome->__get('tmpTitle'), $instanceHome->__get('tmpComment'), $instanceHome->__get('tmpNote'));
+          
+            $result = $this->model->addUsersComments($id_user, $idComment);
+            if ($result === true) {
+                $result = $this->model->addPrestationComments($instanceHome->__get('id_prestation'), $idComment);
+                if ($result === true) {
+                    $displayAlert = '<div class=" text-center" id="alerte" data-location="$this->baseUrl/Prestations/Prestation_' . $_SESSION['id_prestation'] .'" ><strong>Succès...</strong> Votre commentaire a bien été publié. Merci.</div>';
+                
+                    $location = $instanceHome->__get('location');
+                    $instanceHome->__unsetTab();
+                }
+            }
+            if ($result === false) {
+                $displayAlert = '<div class=" text-center" id="alerte" data-location="$this->baseUrl/Prestations/Prestation_' . $_SESSION['id_prestation'] .'" ><strong>Erreur...</strong>Un erreur est survenu lors de la connexion a la base de données.Veuillez recommencer</div>';
 
                 $location = $instanceHome->__get('location');
             }
