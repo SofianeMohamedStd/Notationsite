@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<ruleset name="NatationSite">
+    <description>Mes regles de formatage </description>
+
+        <arg name="colors" />
+        <arg value="p" />
+
+        <file>src</file>
+
+        <rule ref="PSR2"></rule>
+</ruleset>
