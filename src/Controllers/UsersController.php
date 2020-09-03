@@ -48,7 +48,7 @@ class UsersController extends Controller
                   if (password_verify($_POST['mdp'], $hashMdp)) {
 
                      $this->model->setUpdateLogTime($inputPseudo);
-                     
+
                      $instanceHome = new HomeController();
                      $instanceHome->__set('utilisateur', $_POST['pseudo']);
                      $_SESSION['status'] = 2;
@@ -97,8 +97,7 @@ class UsersController extends Controller
          'slug' => $slug,
          'title' => $title,
          'error' => $error,
-         'inputPseudo' => $inputPseudo,
-         'footerconect' => 'footerconect'
+         'inputPseudo' => $inputPseudo
       ]);
    }
    public function register($slug = "Inscription")
@@ -206,8 +205,7 @@ class UsersController extends Controller
          'generalError' => $generalError,
          'error' => $error,
          'inputMail' => $inputMail,
-         'inputPseudo' => $inputPseudo,
-         'footerregister' => 'footerregister'
+         'inputPseudo' => $inputPseudo
       ]);
    }
    public function logout()
