@@ -49,7 +49,7 @@ class Comments extends Model
     }
    
    
-    public function CommentByOeuvre($id)
+    public function commentByOeuvre($id)
     {
 
         $req = $this->pdo->prepare(
@@ -64,7 +64,7 @@ class Comments extends Model
 
         return $req->fetchAll();
     }
-    public function CommentByObjet($id)
+    public function commentByObjet($id)
     {
 
         $req = $this->pdo->prepare(

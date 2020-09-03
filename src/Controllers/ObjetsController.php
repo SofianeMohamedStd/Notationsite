@@ -60,7 +60,7 @@ class ObjetsController extends Controller
  
     
         $instanceComments = new Comments();
-        $comments = $instanceComments->CommentByObjet($id_objet);
+        $comments = $instanceComments->commentByObjet($id_objet);
   
   
         $instanceUser = new Users();
