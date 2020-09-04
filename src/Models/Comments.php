@@ -93,7 +93,7 @@ class Comments extends Model
             'SELECT comments.*
          FROM prestations, prestation_comments, comments
          WHERE prestations.id_prestation = ?
-         AND prestation.id_prestation = prestation_comments.id_prestation
+         AND prestations.id_prestation = prestation_comments.id_prestation
          AND comments.id_comment = prestation_comments.id_comment
          ORDER BY `date` DESC'
         );
