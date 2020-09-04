@@ -6,6 +6,8 @@ use App\Models\Users;
 use App\Controllers\Controller;
 use App\Controllers\HomeController;
 use App\Controllers\CommentsController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UsersController extends Controller
 {
@@ -15,6 +17,8 @@ class UsersController extends Controller
         parent::__construct();
         $this->model = new Users();
         $this->control = new User();
+        $this->request = Request::createFromGlobals();
+        $this->session = new Session();
     }
 
   
@@ -31,19 +35,19 @@ class UsersController extends Controller
                 $error[] = " ";
             } else {
                 $error[] = "";
-                $userInfo = $this->model->checkLogin($_POST["pseudo"]);
+                $userInfo = $this->model->checkLogin($this->request->get('pseudo'));
 
             
                 if ($userInfo) {
-                    $inputPseudo = $_POST['pseudo'];
-                    if (!empty($_POST['mdp'])) {
+                    $inputPseudo = $this->request->get('pseudo');
+                    if (!empty($this->request->get('mdp'))) {
                         $hashMdp = $userInfo["mdp"];
                   
-                        if (password_verify($_POST['mdp'], $hashMdp)) {
+                        if (password_verify($this->request->get('mdp'), $hashMdp)) {
                             $this->model->setUpdateLogTime($inputPseudo);
 
                             $instanceHome = new HomeController();
-                            $instanceHome->__set('utilisateur', $_POST['pseudo']);
+                            $instanceHome->__set('utilisateur',$this->request->get('pseudo'));
                             $_SESSION['status'] = 2;
                             if (isset($_SESSION['location'])) {
                                 $instanceComments = new CommentsController();
@@ -103,23 +107,23 @@ class UsersController extends Controller
             } else {
                 $error[] = "";
 
-                $mail = $_POST['mail'];
+                $mail = $this->request->get('mail');
                 if ($this->control->verifEmail($mail) === true) {
                     $userMail = $this->model->mailExist($mail);
                     if ($userMail === false) {
                         $inputMail = $mail;
                     } else {
-                        $error[0] = 'Le mail : "' . $_POST['mail'] . '" est existe déja';
+                        $error[0] = 'Le mail : "' . $this->request->get('mail') . '" est existe déja';
                     }
                 } else {
                     if ($_POST['mail'] === "") {
                         $error[0] = " ";
                     } else {
-                        $error[0] = 'L\'adresse mail : "' . $_POST['mail'] . '" ne correspond pas aux attentes';
+                        $error[0] = 'L\'adresse mail : "' . $this->request->get('mail') . '" ne correspond pas aux attentes';
                     }
                 }
 
-                $pseudo = $_POST['pseudo'];
+                $pseudo = $this->request->get('pseudo');
                 if ($this->control->verifusername($pseudo) === true) {
                     $userPseudo = $this->model->pseudoExist($pseudo);
                     if ($userPseudo == false) {
@@ -135,16 +139,16 @@ class UsersController extends Controller
                     }
                 }
 
-                if ($this->control->verifPassword($_POST['mdp']) === true) {
+                if ($this->control->verifPassword($this->request->get('pseudo')) === true) {
                     if ($inputPseudo && $inputMail) {
-                        $hashMdp = password_hash($_POST['mdp'], PASSWORD_DEFAULT);
+                        $hashMdp = password_hash($this->request->get('pseudo'), PASSWORD_DEFAULT);
                     } else {
                         if ($_POST === "") {
                             $error[] = " ";
                         }
                     }
                 } else {
-                    if ($_POST['mdp'] === "") {
+                    if ($this->request->get('pseudo') === "") {
                         $error[2] = " ";
                     } else {
                         $error[2] = "Le champ contient des caractères non valides";
